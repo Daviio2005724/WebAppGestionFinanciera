@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Ingeniería Económica</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="app-header">
+        <div class="logo-container">
+            <h1>Finanzas & Proyectos TI</h1>
+        </div>
+        <button id="theme-toggle" class="btn-theme" aria-label="Cambiar tema">🌙 Oscuro</button>
+    </header>
+
+    <div class="layout-container">
+        <!-- Menú de Navegación -->
+        <aside class="sidebar">
+            <nav>
+                <ul class="menu-list">
+                    <li class="menu-item active" data-target="matematicas-financieras">Matemáticas Financieras</li>
+                    <li class="menu-item" data-target="flujo-caja">Flujo de Caja</li>
+                    <li class="menu-item" data-target="evaluacion-proyectos">Evaluación de Proyectos</li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Contenedor Principal de Módulos -->
+        <main class="content-area">
+            
+            <!-- Módulo 1: Matemáticas Financieras -->
+            <section class="module-section active" id="matematicas-financieras">
+                <div class="module-card">
+                    <h2>Matemáticas Financieras</h2>
+                    <form id="form-interes">
+                        <div class="form-group">
+                            <label for="capital-inicial">Capital Inicial (P):</label>
+                            <input type="number" id="capital-inicial" min="0" placeholder="Ej: 5000000" required>
+                            <span class="currency-display" id="display-capital"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="tasa-interes">Tasa de Interés (% por período):</label>
+                            <input type="number" step="0.01" id="tasa-interes" placeholder="Ej: 1.5" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="periodos">Períodos (n):</label>
+                            <input type="number" id="periodos" min="0" placeholder="Ej: 12" required>
+                        </div>
+                        <div class="button-group">
+                            <button type="button" id="btn-interes-simple" class="btn-primary">Interés Simple</button>
+                            <button type="button" id="btn-interes-compuesto" class="btn-primary">Interés Compuesto</button>
+                        </div>
+                        <div class="resultado-box">
+                            <h3>Valor Futuro (S): <span id="resultado-valor-futuro">$0 COP</span></h3>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Módulo 2: Flujo de Caja -->
+            <section class="module-section" id="flujo-caja">
+                <div class="module-card">
+                    <h2>Registro de Flujo de Caja</h2>
+                    <div class="form-group">
+                        <label for="saldo-inicial">Saldo inicial de caja:</label>
+                        <input type="number" id="saldo-inicial" value="0">
+                    </div>
+                    <form id="form-flujo" class="flujo-form">
+                        <div class="form-group">
+                            <label for="flujo-periodo">Período (n):</label>
+                            <input type="number" id="flujo-periodo" min="0" step="1" value="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="flujo-ingresos">Ingresos:</label>
+                            <input type="number" id="flujo-ingresos" value="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="flujo-egresos">Egresos / Inversión:</label>
+                            <input type="number" id="flujo-egresos" value="0" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Registrar Flujo</button>
+                    </form>
+
+                    <div class="table-responsive">
+                        <table id="tabla-flujo-caja">
+                            <thead>
+                                <tr>
+                                    <th>Período</th>
+                                    <th>Ingresos</th>
+                                    <th>Egresos</th>
+                                    <th>Flujo Neto</th>
+                                    <th>Saldo final de caja</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody-flujo-caja">
+                                <!-- Filas generadas dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Módulo 3: Evaluación de Proyectos -->
+            <section class="module-section" id="evaluacion-proyectos">
+                <div class="module-card">
+                    <h2>Evaluación de Proyectos (VPN y TIR)</h2>
+                    <p><em>Los cálculos se basan en los datos registrados en el módulo de Flujo de Caja.</em></p>
+                    <form id="form-evaluacion">
+                        <div class="form-group">
+                            <label for="tasa-descuento">Tasa de Descuento (TIO) %:</label>
+                            <input type="number" step="0.01" id="tasa-descuento" value="10" required>
+                        </div>
+                        <button type="button" id="btn-calcular-evaluacion" class="btn-primary">Calcular Viabilidad</button>
+                        
+                        <div class="indicadores-grid">
+                            <div class="indicador-box">
+                                <h4>Valor Presente Neto (VPN)</h4>
+                                <p id="resultado-vpn">$0 COP</p>
+                            </div>
+                            <div class="indicador-box">
+                                <h4>Tasa Interna de Retorno (TIR)</h4>
+                                <p id="resultado-tir">0.00%</p>
+                            </div>
+                            <div class="indicador-box">
+                                <h4>Relación Beneficio/Costo</h4>
+                                <p id="resultado-bc">0.00</p>
+                            </div>
+                            <div class="indicador-box">
+                                <h4>Período de recuperación</h4>
+                                <p id="resultado-pr">-</p>
+                            </div>
+                        </div>
+                        <p id="veredicto" class="veredicto" hidden></p>
+                    </form>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="calculadoras.js"></script>
+</body>
+</html>
